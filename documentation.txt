@@ -1,0 +1,24 @@
+Made for Mac OS X. Tested on Mac OS 10.9.3 using python 2.7.6.
+
+Note: It should not work on other unix/linux/BSD systems or on python versions less then 2.7 or with python3.
+
+Dependancies:
+	A working internet connection
+	PyAudio
+	And maybe some other modules if they are not included in the standard python modules.
+	Check the imports in cleverbot.py and listener.py and make sure you have all those modules.
+	You should be able to install any module with pip or easy_install. i.e. easy_install pyaudio
+
+Running:
+	In Terminal.app or something similar run:
+	 python cleverbot.py
+	
+	Note: It must be run in the directory extracted from the zip. a.k.a cleverbot.py must be in the same directory as listener.py and chatterbotapi.pyc
+
+Usage:
+	This is a command line application.
+	
+	To use, follow the steps in Running. Then follow the prompts within the application.
+
+	If choosing to use speech recognition, you will need a microphone.
+	Note: You may need to get close to your laptop if you choose to use any built it microphone.

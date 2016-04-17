@@ -1,0 +1,34 @@
+First of all, I programed my project in python because it is the language that I am most comfortable with.
+
+Regarding the code, first I import all of the modules/functions I need such as, chatterbotapi which lets me interface with Cleverbot and listener.py (which I had to modify, but more on that later) which lets me access the google speech recognition api.
+
+Next, I initialize the variables needed for getting responses from Cleverbot.
+
+After that, I ask the user to choose whether they would like to use speech recognition or not, making sure to check for proper responses.
+
+Then I create a list of all the available voices on the users machine by calling say -v ? and redirecting stdio with check_output (a function from the subprocess module) to the variable out, which I then split into an array at every new line. I then iterate over this new array with a for loop and find the first instance of white space in each string in the array, or line in the original output. I store this value in the variable x. Next, I use string slicing to append the substring from the beginning to x (the white space).
+
+After the for loop is completed. I call pop on the newly created array containing all the voices. I do this to get rid of an empty string at the end of the array.
+
+With my newly created array, I print out the available voices in two columns by simulating a C style for loop with a while statement and a variable to increment, defined outside of the while loop. I use this simulated C style for loop to iterate over the array printing a formatted string.
+
+After that, I allow the user to select a voice or press enter for the default voice on his or her computer, making sure the user’s input is valid.
+
+Afterwards, I prompt the user to either start talking or typing and inform him or her that he or she may quit the application by pressing Control-C.
+
+Next, I create a while loop that must be manually broken out of in which the bulk of the application’s code that is related to the main purpose of the application lies. That way the program will continue until the user quits.
+
+In this while loop, is a try/except statement that catches the error KeyboardInterrupt i.e. Control-C and quits nicely upon that error (read Control-C being pressed) as well as sing the user a nice goodbye song, assuming he or she has the proper voice available on his or her machine. If he or she does not, It just says goodbye in an AOL-like fashion.
+
+If the user does not quit, he or she enters another try/except statement I implement in order to catch when Google’s speech recognition api is not working, inform the user of such, and tell them to type instead, thus avoiding a crash and allowing the user to continue his or her experience.
+
+The variable say will now equal an evaluated JSON string or the user’s typed response. 
+
+By means of a few if/else statements, if the user opts for speech recognition say is updated to the first prediction of what the user might have said by using several indexes. Otherwise, if the user chooses to type, say remains the same.
+
+After that, I set the variable rsp to botSession.think(say) which is part of the chatterbotapi module. This function takes that variable say and sends it to Cleverbot’s servers then returns Cleverbot’s response. I have this inside of a try/except statement to catch the error urllib2.URLError, which indicates that there was an issue connecting to Cleverbot’s server. If this error is raised the user is informed of the issue and the program is quit by breaking the while loop. If there is no error, Cleverbot’s response is displayed and read aloud to the user via the say command via the system function in the module os. If the user opted to choose a voice, the voice the user chose will be used by means of a formatted string, otherwise, the default system voice will be used by omitting the voice argument.
+
+Finally, If say equals either an empty array or None, indicating a bad response from Google’s speech recognition api, the user is told to repeat his or herself.
+
+Notes on google speech recognition api:
+	Part way through my project, Google decided to close version one of 	its speech recognition api and to make version two private, so I had 	to get access to version two of Google’s speech recognition api and 	I needed to tweak listener.py in order to get it to work with the 	second version of the api. Additionally, Google would send down an 	array of two dictionaries when I ultimately just wanted the second 	one. So I had to deal with that as well as Google sending the value 	of True as true. To fix this I basically set true equal to True and 	split the return value from Google at newlines into an array and then 	used an index to get the value I wanted.       
